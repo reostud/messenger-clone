@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     }
 
     if (isGroup && (!members || members.length < 2 || !name)) {
-      return new NextResponse("Invalid data", { status: 400 });
+      return new NextResponse("Bad Request", { status: 400 });
     }
 
     if (isGroup) {
@@ -49,24 +49,24 @@ export async function POST(request: Request) {
       return NextResponse.json(newConversation);
     }
 
-    const exisitingConversations = await prisma.conversation.findMany({
+    const existingConversation = await prisma.conversation.findMany({
       where: {
         OR: [
           {
             userIds: {
-              equals: [currentUser.id, userId],
+              equals: [userId, currentUser.id],
             },
           },
           {
             userIds: {
-              equals: [userId, currentUser.id],
+              equals: [currentUser.id, userId],
             },
           },
         ],
       },
     });
 
-    const singleConversation = exisitingConversations[0];
+    const singleConversation = existingConversation[0];
 
     if (singleConversation) {
       return NextResponse.json(singleConversation);
@@ -98,6 +98,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(newConversation);
   } catch (error: any) {
-    return new NextResponse("Internal Error", { status: 500 });
+    return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
+

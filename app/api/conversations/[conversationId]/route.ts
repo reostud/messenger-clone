@@ -12,16 +12,10 @@ export async function DELETE(
   { params }: { params: IParams }
 ) {
   try {
-    // Await params to resolve the async nature
-    const { conversationId } = params; // No need to await params here, it should be directly used
-
-    if (!conversationId) {
-      return new NextResponse("Conversation ID is required", { status: 400 });
-    }
-
+    const { conversationId } = params;
     const currentUser = await getCurrentUser();
 
-    if (!currentUser?.id || !currentUser?.email) {
+    if (!currentUser?.id) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
