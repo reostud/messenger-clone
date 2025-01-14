@@ -22,7 +22,7 @@ export default function Home() {
             sm:max-w-md"
       >
         <Image
-          alt="ogo"
+          alt="Logo"
           height="48"
           width="48"
           className="mx-auto w-auto"

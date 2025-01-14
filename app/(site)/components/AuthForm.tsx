@@ -151,7 +151,7 @@ const AuthForm = () => {
                 absolute
                 inset-0
                 flex
-                item-center
+                items-center 
               "
             >
               <div
